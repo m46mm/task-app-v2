@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { createClient } from '@supabase/supabase-js'
 
 // Supabaseの接続情報（自分のURLとキーに書き換えてね）
-const supabaseUrl = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyaWlmaWxjY25jenFpdXRocWl3Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4ODY3NTE1NSwiZXhwIjoyMTA0MjUxMTU1fQ.y_1TQlhrZCB00WF51NWcurSQeMgRHhtTNmCaNFmDZQs'
+const supabaseUrl = 'https://vriifilccnczqiuthqiw.supabase.co'
 const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyaWlmaWxjY25jenFpdXRocWl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2NzUxNTUsImV4cCI6MjEwNDI1MTE1NX0.bGmSpCWXXhymvHb3psDA80P80cngVuPjXx3uuYLEPWA'
 const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
