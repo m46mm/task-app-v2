@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = 'https://vriifilccnczqiuthqiw.supabase.co'
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyaWlmaWxjY25jenFpdXRocWl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2NzUxNTUsImV4cCI6MjEwNDI1MTE1NX0.bGmSpCWXXhymvHb3psDA80P80cngVuPjXx3uuYLEPWA'
+const supabaseUrl = 'YOUR_SUPABASE_URL'
+const supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY'
 const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 export default function Home() {
@@ -30,7 +30,7 @@ export default function Home() {
 
   const fetchTasks = async () => {
     const { data, error } = await supabase
-      .from('tasks')
+      .from('カレンダー')
       .select('*')
     
     if (error) {
@@ -67,7 +67,7 @@ export default function Home() {
     if (!newTaskText.trim()) return
 
     const { error } = await supabase
-      .from('tasks')
+      .from('カレンダー')
       .insert([{ 
         text: newTaskText, 
         done: false, 
@@ -88,7 +88,7 @@ export default function Home() {
 
   const toggleTask = async (id, currentDone) => {
     const { error } = await supabase
-      .from('tasks')
+      .from('カレンダー')
       .update({ done: !currentDone })
       .eq('id', id)
 
@@ -101,7 +101,7 @@ export default function Home() {
 
   const deleteTask = async (id) => {
     const { error } = await supabase
-      .from('tasks')
+      .from('カレンダー')
       .delete()
       .eq('id', id)
 
