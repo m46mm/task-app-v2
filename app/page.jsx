@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = 'https://vriifilccnczqiuthqiw.supabase.co'
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyaWlmaWxjY25jenFpdXRocWl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2NzUxNTUsImV4cCI6MjEwNDI1MTE1NX0.bGmSpCWXXhymvHb3psDA80P80cngVuPjXx3uuYLEPWA'
+const supabaseUrl = 'https://vriifilccncZqiuthqiw.supabase.co'
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyaWlmaWxjY25jenFpdXRocWl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2NzUxNTUsImV4cCI6MjEwNDI1MTE1NX0.bGmSpCWXXhymvHb3psDA80P80cngVuPjXx3uuYLEPWA' // ※ご自身のAnon Keyを入れてください
 const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 export default function Home() {
@@ -20,7 +20,6 @@ export default function Home() {
   const todayStr = new Date().toISOString().split('T')[0]
   const [newTaskDate, setNewTaskDate] = useState(todayStr)
   const [newTaskTime, setNewTaskTime] = useState('')
-  const [newTaskTag, setNewTaskTag] = useState('仕事')
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -72,8 +71,7 @@ export default function Home() {
         text: newTaskText, 
         done: false, 
         task_date: newTaskDate || null,
-        task_time: newTaskTime || null,
-        tag: newTaskTag || 'その他'
+        task_time: newTaskTime || null
       }])
 
     if (error) {
@@ -101,7 +99,7 @@ export default function Home() {
 
   const deleteTask = async (id) => {
     const { error } = await supabase
-      .from('カレンダー')
+      .from('tasks')
       .delete()
       .eq('id', id)
 
@@ -194,17 +192,6 @@ export default function Home() {
             onChange={(e) => setNewTaskTime(e.target.value)}
             style={{ padding: '8px', fontSize: '14px', border: '1px solid #ccc', borderRadius: '4px', flex: 1 }}
           />
-          <select
-            value={newTaskTag}
-            onChange={(e) => setNewTaskTag(e.target.value)}
-            style={{ padding: '8px', fontSize: '14px', border: '1px solid #ccc', borderRadius: '4px', flex: 1 }}
-          >
-            <option value="仕事">💼 仕事</option>
-            <option value="プライベート">🏠 プライベート</option>
-            <option value="勉強">📚 勉強</option>
-            <option value="買い物">🛒 買い物</option>
-            <option value="その他">📌 その他</option>
-          </select>
         </div>
         <button type="submit" style={{ padding: '10px', background: '#16a34a', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
           タスクを追加
@@ -226,14 +213,9 @@ export default function Home() {
                   style={{ width: '18px', height: '18px', cursor: 'pointer' }}
                 />
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                    <span style={{ background: '#e5e7eb', padding: '2px 6px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', color: '#374151' }}>
-                      {task.tag || 'その他'}
-                    </span>
-                    <span style={{ textDecoration: task.done ? 'line-through' : 'none', color: task.done ? '#888' : '#000', fontSize: '16px' }}>
-                      {task.text}
-                    </span>
-                  </div>
+                  <span style={{ textDecoration: task.done ? 'line-through' : 'none', color: task.done ? '#888' : '#000', fontSize: '16px', display: 'block', marginBottom: '4px' }}>
+                    {task.text}
+                  </span>
                   <span style={{ fontSize: '12px', color: '#666' }}>
                     📅 {task.task_date || '日付未設定'} {task.task_time ? `🕒 ${task.task_time}` : ''}
                   </span>
