@@ -30,7 +30,7 @@ export default function Home() {
 
   const fetchTasks = async () => {
     const { data, error } = await supabase
-      .from('カレンダー')
+      .from('tasks')
       .select('*')
     
     if (error) {
@@ -67,7 +67,7 @@ export default function Home() {
     if (!newTaskText.trim()) return
 
     const { error } = await supabase
-      .from('カレンダー')
+      .from('tasks')
       .insert([{ 
         text: newTaskText, 
         done: false, 
@@ -88,7 +88,7 @@ export default function Home() {
 
   const toggleTask = async (id, currentDone) => {
     const { error } = await supabase
-      .from('カレンダー')
+      .from('tasks')
       .update({ done: !currentDone })
       .eq('id', id)
 
