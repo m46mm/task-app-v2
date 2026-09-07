@@ -32,7 +32,6 @@ export default function Home() {
     const { data, error } = await supabase
       .from('tasks')
       .select('*')
-      .order('task_date', { ascending: true })
     
     if (error) {
       console.error('タスクの取得に失敗しました:', error)
