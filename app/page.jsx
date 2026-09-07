@@ -20,7 +20,7 @@ export default function Home() {
   const todayStr = new Date().toISOString().split('T')[0]
   const [newTaskDate, setNewTaskDate] = useState(todayStr)
   const [newTaskTime, setNewTaskTime] = useState('')
-  const [newTaskTag, setNewTaskTag] = useState('仕事') // デフォルトのタグ
+  const [newTaskTag, setNewTaskTag] = useState('仕事')
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -33,7 +33,6 @@ export default function Home() {
       .from('tasks')
       .select('*')
       .order('task_date', { ascending: true })
-      .order('task_time', { ascending: true, nullsFirst: false })
     
     if (error) {
       console.error('タスクの取得に失敗しました:', error)
@@ -120,11 +119,9 @@ export default function Home() {
     
     let url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}`
     if (task.task_time) {
-      // 時間指定がある場合 (Googleカレンダーの形式: YYYYMMDDTHHMMSSZ)
       const timeCleaned = task.task_time.replace(/:/g, '') + '00'
       url += `&dates=${dateFormatted}T${timeCleaned}/${dateFormatted}T${timeCleaned}`
     } else {
-      // 終日
       url += `&dates=${dateFormatted}/${dateFormatted}`
     }
     window.open(url, '_blank')
